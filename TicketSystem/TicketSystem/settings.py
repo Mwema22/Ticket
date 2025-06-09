@@ -59,7 +59,9 @@ ROOT_URLCONF = 'TicketSystem.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ 
+                   BASE_DIR / 'Main' / 'templates',# Added my 'Main' folder here
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
