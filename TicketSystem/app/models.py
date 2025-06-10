@@ -18,8 +18,8 @@ class Users(AbstractUser):
     user_types = models.CharField(max_length=12, choices=USERTYPES, default='Atendee')
     profile_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
 
-    USERNAME_FIELD = 'email' # Set email as the primary login field
-    REQUIRED_FIELDS = ['username', 'firstname', 'lastname', 'phone_number'] # Fields required during user creation
+    username_field = 'email' # Set email as the primary login field
+    required_field = ['username', 'firstname', 'lastname', 'phone_number'] # Fields required during user creation
 
     def __str__(self):
         return self.username
@@ -33,15 +33,15 @@ class Orders(models.Model):
         related_name='orders'
     )
     order_date = models.DateTimeField(auto_now_add=True)
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    total_amount = models.FloatField(default=0)
     order_status = models.CharField(max_length=7, default='pending')
 
     def __str__(self):
-        return self.orderStatus
+        return self.order_status
 
 
 class Payments(models.Model):
-    PaymentMethod=[
+    PAYMENT_METHOD=[
         ('Mpesa','Mpesa'),
         ('Bank Transer','Bank Transfer'),
     ]
@@ -52,24 +52,24 @@ class Payments(models.Model):
         db_column='order',
         related_name='payments'
     )
-    transaction_code = models.CharField(max_length=200, unique=True)
+    transaction_code = models.CharField(max_length=15, unique=True)
     payment_method = models.CharField(
-        max_length=20,
-        choices=PaymentMethod
+        max_length=15,
+        choices= PAYMENT_METHOD
     )
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    currency = models.CharField(max_length=10, default='KES')
-    payment_status = models.CharField(max_length=50, default='pending')
+    amount = models.FloatField(default=0)
+    currency = models.CharField(max_length=6, default='KES')
+    payment_status = models.CharField(max_length=7, default='pending')
     payment_date = models.DateTimeField(auto_now_add=True)
-    gateway_response_code = models.CharField(max_length=50, blank=True, null=True)
+    gateway_response_code = models.CharField(max_length=20, blank=True, null=True)
     gateway_response_message = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.transactionCode
+        return self.transaction_code
     
 
 class Categories(models.Model):
-    category_name = models.CharField(max_length=100)
+    category_name = models.CharField(max_length=20, default="Music")
     icon_url = models.URLField(blank=True, null=True)
     display_order = models.IntegerField(default=0)
 
@@ -77,16 +77,17 @@ class Categories(models.Model):
         return self.category_name
     
 class EventPlanners(models.Model):
-    user = models.OneToOneField(
+    user= models.OneToOneField(
         Users, 
         on_delete=models.CASCADE,
-        db_column='user'
+        db_column='users',
+        default=1
     )
-    organization_name = models.CharField(max_length=200)
+    organization_name = models.CharField(max_length=20,default="Banjuka")
     description = models.TextField(blank=True, null=True)
     website_url = models.URLField(blank=True, null=True)
     organization_email = models.EmailField()
-    organization_number = models.CharField(max_length=50, blank=True, null=True)
+    organization_number = models.CharField(max_length=20, blank=True, null=True)
     join_date = models.DateTimeField(auto_now_add=True)
     # Many-to-many relationship will be defined in Events model
 
@@ -99,17 +100,17 @@ class Events(models.Model):
     # Changed from ForeignKey to ManyToManyField for many-to-many relationship
     planners = models.ManyToManyField(
         EventPlanners,
-        related_name='events',
+        related_name='event',
         blank=True
     )
-    event_name = models.CharField(max_length=200)
+    event_name = models.CharField(max_length=20)
     description = models.TextField(blank=True, null=True)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
-    venue_name = models.CharField(max_length=200)
+    venue_name = models.CharField(max_length=20)
     venue_address = models.TextField()
-    city = models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
+    city = models.CharField(max_length=10)
+    country = models.CharField(max_length=10)
     latitude = models.DecimalField(max_digits=10, decimal_places=8, blank=True, null=True)
     longitude = models.DecimalField(max_digits=11, decimal_places=8, blank=True, null=True)
     main_image_url = models.URLField(blank=True, null=True)
@@ -119,9 +120,9 @@ class Events(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         db_column='category',
-        related_name='events'
+        related_name='event'
     )
-    status = models.CharField(max_length=50, default='draft')
+    status = models.CharField(max_length=15, default='draft')
     is_featured = models.BooleanField(default=False)
     is_trending = models.BooleanField(default=False)
     view_count = models.IntegerField(default=0)
@@ -132,7 +133,7 @@ class Events(models.Model):
         return self.event_name
 
 class TicketTypes(models.Model):
-    TicketName=[
+    TICKET_NAME=[
         ('EarlyBird','EarlyBird'),
         ('VIP','VIP'),
         ('Standard','Standard'),
@@ -145,7 +146,7 @@ class TicketTypes(models.Model):
     )
     ticket_name = models.CharField(
         max_length=9,
-        choices=TicketName
+        choices=TICKET_NAME
     )
     price = models.FloatField (default=0)
     available_qty = models.IntegerField()
@@ -171,7 +172,7 @@ class OrderItems(models.Model):
         related_name='order_items'
     )
     quantity = models.IntegerField()
-    price_at_purchase = models.DecimalField(max_digits=10, decimal_places=2)
+    price_at_purchase = models.FloatField(default=0)
 
     def __str__(self):
         return f'ticket_type:{self.ticket_type}, quantity:{self.quantity}'
@@ -183,11 +184,11 @@ class Ticket(models.Model):
         db_column='orderItem',
         related_name='tickets'
     )
-    ticket_code = models.CharField(max_length=100, unique=True)
+    ticket_code = models.CharField(max_length=15, unique=True)
     is_scanned = models.BooleanField(default=False)
     scanned_at = models.DateTimeField(blank=True, null=True)
     issue_date = models.DateTimeField(auto_now_add=True)
-    attendee_name = models.CharField(max_length=200)
+    attendee_name = models.CharField(max_length=20)
     attendee_email = models.EmailField()
 
     def __str__(self):
