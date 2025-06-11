@@ -1,5 +1,6 @@
-from django.db import models
+from django.db import models, migrations
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
 
 # Create your models here.
 class Users(AbstractUser):
@@ -9,16 +10,26 @@ class Users(AbstractUser):
         ('Admin', 'Admin'),
     ]
 
+    phone_regex = RegexValidator(
+        regex=r'^\+\d{1,3}\d{9}$}',
+        message = "Phone number must start with '+' followed by country code and 9 digits."
+    )
+
     username = models.CharField(max_length=30, unique=True) # Removed null=True
-    firstname = models.CharField(max_length=30, null=True, blank=True) # Removed unique=True
-    lastname = models.CharField(max_length=30, null=True, blank=True)   # Removed unique=True
-    email = models.EmailField(max_length=254, unique=True) # Added unique=True for email
-    # password field is handled by AbstractUser, so no explicit declaration needed here unless customizing
-    phone_number = models.CharField(max_length=20, null=True, blank=True) # Increased max_length, added null/blank for flexibility
+    firstname = models.CharField(max_length=30, null=True, blank=True)
+    lastname = models.CharField(max_length=30, null=True, blank=True)  
+    email = models.EmailField(max_length=254, unique=True) 
+
+    phone_number = models.CharField(
+        max_length=13,
+        validators=[phone_regex],
+        null=True,
+        blank=True)
+    
     user_types = models.CharField(max_length=12, choices=USERTYPES, default='Atendee')
     profile_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
 
-    username_field = 'email' # Set email as the primary login field
+    username_field = 'email' 
     required_field = ['username', 'firstname', 'lastname', 'phone_number'] # Fields required during user creation
 
     def __str__(self):
