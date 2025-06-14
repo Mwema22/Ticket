@@ -5,9 +5,9 @@ from django.core.validators import RegexValidator
 # Create your models here.
 class Users(AbstractUser):
     USERTYPES = [
-        ('Atendee', 'Atendee'),
-        ('EventPlanner', 'EventPlanner'),
-        ('Admin', 'Admin'),
+        ('atendee', 'Atendee'),
+        ('event_planner', 'EventPlanner'),
+        ('admin', 'Admin'),
     ]
 
     phone_regex = RegexValidator(
@@ -26,17 +26,21 @@ class Users(AbstractUser):
         null=True,
         blank=True)
     
-    user_types = models.CharField(max_length=12, choices=USERTYPES, default='Atendee')
+    user_types = models.CharField(max_length=12, choices=USERTYPES, default='atendee')
     profile_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
 
     username_field = 'email' 
-    required_field = ['username', 'firstname', 'lastname', 'phone_number'] # Fields required during user creation
-
+    
     def __str__(self):
         return self.username
     
 
 class Orders(models.Model):
+    ORDER_STATUS = [
+        ('pending', 'Pending'),
+        ('cancelled', 'Cancelled'),
+        ('completed', 'Completed'),
+    ]
     user= models.ForeignKey(
         Users,
         on_delete=models.CASCADE,
@@ -45,7 +49,7 @@ class Orders(models.Model):
     )
     order_date = models.DateTimeField(auto_now_add=True)
     total_amount = models.FloatField(default=0)
-    order_status = models.CharField(max_length=7, default='pending')
+    order_status = models.CharField(max_length=9,choices=ORDER_STATUS, default='pending')
 
     def __str__(self):
         return self.order_status
@@ -53,8 +57,13 @@ class Orders(models.Model):
 
 class Payments(models.Model):
     PAYMENT_METHOD=[
-        ('Mpesa','Mpesa'),
-        ('Bank Transer','Bank Transfer'),
+        ('mpesa','Mpesa'),
+        ('card','Card Payment'),
+    ]
+    PAYMENT_STATUS = [
+        ('pending', 'Pending'),
+        ('cancelled', 'Cancelled'),
+        ('completed', 'Completed'),
     ]
 
     order = models.ForeignKey(
@@ -70,7 +79,7 @@ class Payments(models.Model):
     )
     amount = models.FloatField(default=0)
     currency = models.CharField(max_length=6, default='KES')
-    payment_status = models.CharField(max_length=7, default='pending')
+    payment_status = models.CharField(max_length=7,choices=PAYMENT_STATUS, default='pending')
     payment_date = models.DateTimeField(auto_now_add=True)
     gateway_response_code = models.CharField(max_length=20, blank=True, null=True)
     gateway_response_message = models.TextField(blank=True, null=True)
@@ -107,6 +116,11 @@ class EventPlanners(models.Model):
     
 
 class Events(models.Model):
+    STATUS = [
+        ('upcoming', 'Upcoming'),
+        ('past', 'Past'),
+        ('live', 'Live'),
+    ]
     
     # Changed from ForeignKey to ManyToManyField for many-to-many relationship
     planners = models.ManyToManyField(
@@ -122,9 +136,7 @@ class Events(models.Model):
     venue_address = models.TextField()
     city = models.CharField(max_length=10)
     country = models.CharField(max_length=10)
-    latitude = models.DecimalField(max_digits=10, decimal_places=8, blank=True, null=True)
-    longitude = models.DecimalField(max_digits=11, decimal_places=8, blank=True, null=True)
-    main_image_url = models.URLField(blank=True, null=True)
+    thumbnail = models.URLField(blank=True, null=True)
     gallery_image_url = models.URLField(blank=True, null=True)
     category= models.ForeignKey(
         Categories,
@@ -133,7 +145,7 @@ class Events(models.Model):
         db_column='category',
         related_name='event'
     )
-    status = models.CharField(max_length=15, default='draft')
+    status = models.CharField(max_length=8, choices=STATUS, default='upcoming')
     is_featured = models.BooleanField(default=False)
     is_trending = models.BooleanField(default=False)
     view_count = models.IntegerField(default=0)
