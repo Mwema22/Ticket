@@ -63,51 +63,8 @@ def login_view(request):
 
     return render(request, 'main/login.html')
 
-def register(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        firstname = request.POST.get('firstname')
-        lastname = request.POST.get('lastname')
-        email = request.POST.get('email')
-        phone_number = request.POST.get('phone_number')
-        password = request.POST.get('password')
-        user_type = request.POST.get('user_type', 'Atendee')  # Default to Atendee
-        
-        # Check if user already exists
-        if Users.objects.filter(email=email).exists():
-            messages.error(request, 'Email already exists')
-            return render(request, 'main/register.html')
-        
-        if Users.objects.filter(username=username).exists():
-            messages.error(request, 'Username already exists')
-            return render(request, 'main/register.html')
-        
-        # Validate required fields
-        if not all([username, firstname, lastname, email, phone_number, password]):
-            messages.error(request, 'All fields are required')
-            return render(request, 'main/register.html')
-        
-        try:
-            # Create new user
-            user = Users.objects.create_user(
-                username=username,
-                email=email,
-                password=password,
-                firstname=firstname,
-                lastname=lastname,
-                phone_number=phone_number,
-                user_types=user_type
-            )
-            
-            messages.success(request, 'Account created successfully! Please login.')
-            return redirect('login')
-            
-        except Exception as e:
-            messages.error(request, f'Error creating account: {str(e)}')
-            return render(request, 'main/register.html')
-    
-    else:
-        return render(request, 'main/register.html')
+
+
 
 # Events listing view (handles /events/ URL)
 def events_list(request):
