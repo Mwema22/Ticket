@@ -6,7 +6,7 @@ from django.core.validators import RegexValidator
 class Users(AbstractUser):
     USERTYPES = [
         ('atendee', 'Atendee'),
-        ('event_planner', 'EventPlanner'),
+        ('event_planner', 'Event Planner'),
         ('admin', 'Admin'),
     ]
 
@@ -26,7 +26,7 @@ class Users(AbstractUser):
         null=True,
         blank=True)
     
-    user_types = models.CharField(max_length=12, choices=USERTYPES, default='atendee')
+    user_types = models.CharField(max_length=13, choices=USERTYPES, default='atendee')
     profile_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
 
     username_field = 'email' 
@@ -79,7 +79,7 @@ class Payments(models.Model):
     )
     amount = models.FloatField(default=0)
     currency = models.CharField(max_length=6, default='KES')
-    payment_status = models.CharField(max_length=7,choices=PAYMENT_STATUS, default='pending')
+    payment_status = models.CharField(max_length=9,choices=PAYMENT_STATUS, default='pending')
     payment_date = models.DateTimeField(auto_now_add=True)
     gateway_response_code = models.CharField(max_length=20, blank=True, null=True)
     gateway_response_message = models.TextField(blank=True, null=True)
