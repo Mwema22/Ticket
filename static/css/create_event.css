@@ -1,0 +1,334 @@
+/* EventTik Event Form Styles */
+:root {
+    --primary-purple: #8B5CF6;
+    --dark-purple: #7C3AED;
+    --light-purple: #A78BFA;
+    --purple-bg: rgba(139, 92, 246, 0.1);
+    --success-color: #10B981;
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+    --text-dark: #374151;
+    --text-light: #6B7280;
+    --border-color: #E5E7EB;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 2rem 0;
+}
+
+.form-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin: 2rem auto;
+    max-width: 800px;
+}
+
+.form-header {
+    background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+.form-header h2 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.form-header p {
+    margin: 0.5rem 0 0 0;
+    opacity: 0.9;
+    font-size: 1.1rem;
+}
+
+.form-body {
+    padding: 2rem;
+}
+
+/* Django form paragraph styling */
+.form-body p {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Label styling */
+.form-body label {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 1rem;
+}
+
+/* Input field styling */
+.form-body input[type="text"],
+.form-body input[type="email"],
+.form-body input[type="url"],
+.form-body input[type="datetime-local"],
+.form-body input[type="file"],
+.form-body textarea,
+.form-body select {
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    width: 100%;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-body input:focus,
+.form-body textarea:focus,
+.form-body select:focus {
+    outline: none;
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.25);
+}
+
+.form-body input:hover,
+.form-body textarea:hover,
+.form-body select:hover {
+    border-color: var(--light-purple);
+}
+
+/* Textarea specific styling */
+.form-body textarea {
+    min-height: 120px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+/* File input styling */
+.form-body input[type="file"] {
+    padding: 0.5rem;
+    background: var(--purple-bg);
+    border-style: dashed;
+    border-color: var(--light-purple);
+}
+
+.form-body input[type="file"]:hover {
+    background: rgba(139, 92, 246, 0.15);
+    border-color: var(--primary-purple);
+}
+
+/* Select dropdown styling */
+.form-body select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    appearance: none;
+}
+
+/* Multiple select styling */
+.form-body select[multiple] {
+    background-image: none;
+    padding-right: 1rem;
+    min-height: 120px;
+}
+
+.form-body select[multiple] option {
+    padding: 0.5rem;
+    margin: 0.25rem 0;
+}
+
+.form-body select[multiple] option:checked {
+    background: var(--primary-purple);
+    color: white;
+}
+
+/* Checkbox styling */
+.form-body input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.5rem;
+    transform: scale(1.2);
+    accent-color: var(--primary-purple);
+}
+
+/* Checkbox label styling */
+.form-body input[type="checkbox"] + label,
+.form-body label:has(input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.5rem 0;
+}
+
+/* Button styling */
+.form-body button[type="submit"],
+.btn-create-event {
+    background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.form-body button[type="submit"]:hover,
+.btn-create-event:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+    background: linear-gradient(135deg, var(--dark-purple), var(--primary-purple));
+}
+
+.form-body button[type="submit"]:active,
+.btn-create-event:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+}
+
+/* Error styling */
+.form-body .errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0 0;
+}
+
+.form-body .errorlist li {
+    color: var(--danger-color);
+    font-size: 0.9rem;
+    padding: 0.25rem 0;
+    font-weight: 500;
+}
+
+.form-body .error input,
+.form-body .error textarea,
+.form-body .error select {
+    border-color: var(--danger-color);
+}
+
+/* Help text styling */
+.form-body .helptext {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 0.25rem;
+    font-style: italic;
+}
+
+/* Required field indicator */
+.form-body label:after {
+    content: " *";
+    color: var(--danger-color);
+    font-weight: bold;
+}
+
+.form-body label[for$="_thumbnail"]:after,
+.form-body label[for$="_gallery_image_url"]:after,
+.form-body label[for$="_is_featured"]:after,
+.form-body label[for$="_is_trending"]:after,
+.form-body label[for$="_planners"]:after {
+    content: "";
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem 0;
+    }
+    
+    .form-container {
+        margin: 1rem;
+        border-radius: 15px;
+    }
+    
+    .form-header {
+        padding: 1.5rem;
+    }
+    
+    .form-header h2 {
+        font-size: 1.5rem;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .form-body {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-header h2 {
+        font-size: 1.25rem;
+    }
+    
+    .form-body {
+        padding: 1rem;
+    }
+    
+    .form-body button[type="submit"],
+    .btn-create-event {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* Animation for form loading */
+.form-container {
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Focus ring for accessibility */
+.form-body input:focus-visible,
+.form-body textarea:focus-visible,
+.form-body select:focus-visible,
+.form-body button:focus-visible {
+    outline: 2px solid var(--primary-purple);
+    outline-offset: 2px;
+}
+
+/* Loading state for button */
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.btn-loading:after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

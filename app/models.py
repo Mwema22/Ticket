@@ -217,4 +217,3 @@ class Ticket(models.Model):
     def __str__(self):
         return f'order_item:{self.order_item},ticket_code: {self.ticket_code}'
     
-
