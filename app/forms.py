@@ -1,5 +1,5 @@
 from django import forms
-from .models import Users
+from .models import Users, Events
 
 class RegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -16,3 +16,19 @@ class RegistrationForm(forms.ModelForm):
         if password and confirm_password and password != confirm_password:
             raise forms.ValidationError("Passwords do not match.")
         return cleaned_data
+    
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Events
+        fields = [
+            'event_name', 'description', 'start_date', 'end_date',
+            'venue_name', 'venue_address', 'city', 'country',
+            'thumbnail', 'gallery_image_url', 'category',
+            'status', 'is_featured', 'is_trending', 'planners'
+        ]
+        widgets = {
+            'start_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'end_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        }
+

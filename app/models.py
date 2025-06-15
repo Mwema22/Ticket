@@ -5,9 +5,9 @@ from django.core.validators import RegexValidator
 # Create your models here.
 class Users(AbstractUser):
     USERTYPES = [
-        ('atendee', 'Atendee'),
+        ('attendee', 'Attendee'),
         ('event_planner', 'Event Planner'),
-        ('admin', 'Admin'),
+
     ]
 
     phone_regex = RegexValidator(
