@@ -1,14 +1,13 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.utils import timezone
 from .models import *
 from app.forms import RegistrationForm , EventForm
 
 
-
-# Create your views here.
 def home(request):
     """Display homepage with featured events"""
     featured_events = Events.objects.filter(
@@ -63,6 +62,9 @@ def login_view(request):
 
 
 def signup_view(request):
+    """  
+    Handles the sign up process for users
+    """
     if request.method == "POST":
         form = RegistrationForm(request.POST, request.FILES)
         if form.is_valid():
@@ -122,3 +124,13 @@ def create_event_view(request):
     else:
         form = EventForm()
     return render(request, "main/create_event.html", {"form": form})
+
+@login_required(login_url='/login/')
+def my_events_view(request):
+    event_planner = get_object_or_404(EventPlanners, user=request.user)
+    my_events = Events.objects.filter(planners=event_planner)
+
+    context = {
+        'my_events': my_events
+    }
+    return render(request, 'main/my_events.html', context)

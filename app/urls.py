@@ -8,7 +8,7 @@ urlpatterns = [
     path('register/',signup_view, name="register"),
     path('event-planner/dashboard/', event_planner_dashboard, name="event_planner_dashboard"),
     path('create/event/', create_event_view, name="create_event_view"),
-    path('get/user/events', my_events_view, name="my_events_view"),
+    path('get/user/events/', my_events_view, name="my_events_view"),
 
 
 ]
