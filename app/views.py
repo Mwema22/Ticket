@@ -1,12 +1,11 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from .models import *
 from app.forms import RegistrationForm , EventForm
-
-
+from app.models import EventPlanners
 
 # Create your views here.
 def home(request):
@@ -69,6 +68,10 @@ def signup_view(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data["password"])
             user.save()
+
+            if user.user_types == 'event_planner':
+                EventPlanners.objects.create(user=user)
+
             return redirect("login") 
         else:
             messages.error(request, "Please correct the errors below.")
@@ -122,3 +125,29 @@ def create_event_view(request):
     else:
         form = EventForm()
     return render(request, "main/create_event.html", {"form": form})
+
+@login_required(login_url='/login/')
+def my_events_view(request):
+    # Get the logged-in user's EventPlanner profile
+    event_planner = get_object_or_404(EventPlanners, user=request.user)
+
+    # Filter events where the current planner is among the planners (ManyToMany)
+    my_events = Events.objects.filter(planners=event_planner)
+
+    context = {
+        'my_events': my_events
+    }
+    return render(request, 'main/my_events.html', context)
+
+@login_required(login_url='/login/')
+def get_user_events_view(request):
+    # Get the logged-in user's EventPlanner profile
+    event_planner = get_object_or_404(EventPlanners, user=request.user)
+
+    # Filter events where the current planner is among the planners (ManyToMany)
+    my_events = Events.objects.filter(planners=event_planner)
+
+    context = {
+        'my_events': my_events
+    }
+    return render(request, 'main/my_events.html', context)
