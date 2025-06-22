@@ -1,11 +1,9 @@
 from django.contrib import admin
-
-# Register your models here.
-from app.models import *
-from django.contrib.auth.admin import UserAdmin
 from django import forms
+from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from users.models import User, EventPlanner
 
 User = get_user_model()
 
@@ -53,13 +51,5 @@ class CustomUserAdmin(UserAdmin):
         }),
     )
 
-admin.site.register(Users, CustomUserAdmin),
-admin.site.register(Events),
-admin.site.register(Categories),
-admin.site.register(EventPlanners),
-admin.site.register(Orders),
-admin.site.register(OrderItems),
-admin.site.register(Ticket),
-admin.site.register(TicketTypes),
-admin.site.register(Payments),
-
+admin.site.register(User, CustomUserAdmin),
+admin.site.register(EventPlanner),
