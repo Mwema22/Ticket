@@ -1,0 +1,185 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event</title>
+    <link rel="stylesheet" href="{% static 'css/create_event.css' %}">
+</head>
+
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h1>Create Event</h1>
+            <p>Fill in the details to create your event</p>
+        </div>
+        
+        <!-- Display Django messages -->
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <form id="eventForm" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-body">
+                <div class="form-group">
+                    <label for="{{ form.event_name.id_for_label }}">Event Name *</label>
+                    {{ form.event_name }}
+                    {% if form.event_name.errors %}
+                        <span class="error-message">{{ form.event_name.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">Description</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <span class="error-message">{{ form.description.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.start_date.id_for_label }}">Start Date & Time *</label>
+                        {{ form.start_date }}
+                        {% if form.start_date.errors %}
+                            <span class="error-message">{{ form.start_date.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.end_date.id_for_label }}">End Date & Time *</label>
+                        {{ form.end_date }}
+                        {% if form.end_date.errors %}
+                            <span class="error-message">{{ form.end_date.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.venue_name.id_for_label }}">Venue Name</label>
+                    {{ form.venue_name }}
+                    {% if form.venue_name.errors %}
+                        <span class="error-message">{{ form.venue_name.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.venue_address.id_for_label }}">Venue Address</label>
+                    {{ form.venue_address }}
+                    {% if form.venue_address.errors %}
+                        <span class="error-message">{{ form.venue_address.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.city.id_for_label }}">City *</label>
+                        {{ form.city }}
+                        {% if form.city.errors %}
+                            <span class="error-message">{{ form.city.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.country.id_for_label }}">Country *</label>
+                        {{ form.country }}
+                        {% if form.country.errors %}
+                            <span class="error-message">{{ form.country.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.category.id_for_label }}">Category</label>
+                    {{ form.category }}
+                    {% if form.category.errors %}
+                        <span class="error-message">{{ form.category.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.thumbnail.id_for_label }}">Event Thumbnail</label>
+                    <div class="file-upload-wrapper">
+                        {{ form.thumbnail }}
+                        <div class="file-upload-display">
+                            <span class="file-upload-text">Choose a thumbnail image or drag and drop</span>
+                            <div class="file-preview" id="thumbnail-preview"></div>
+                        </div>
+                    </div>
+                    {% if form.thumbnail.errors %}
+                        <span class="error-message">{{ form.thumbnail.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.gallery_image_url.id_for_label }}">Gallery Image URL</label>
+                    {{ form.gallery_image_url }}
+                    <small class="field-help">Optional: Enter a URL for an additional gallery image</small>
+                    {% if form.gallery_image_url.errors %}
+                        <span class="error-message">{{ form.gallery_image_url.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.planners.id_for_label }}">Event Planners</label>
+                    {{ form.planners }}
+                    <small class="field-help">Enter the names of event planners, separated by commas</small>
+                    {% if form.planners.errors %}
+                        <span class="error-message">{{ form.planners.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Status field (if it exists in your model) -->
+                {% if form.status %}
+                <div class="form-group">
+                    <label for="{{ form.status.id_for_label }}">Status</label>
+                    {{ form.status }}
+                    {% if form.status.errors %}
+                        <span class="error-message">{{ form.status.errors.0 }}</span>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                <div class="form-row checkbox-row">
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            {{ form.is_featured }}
+                            <span class="checkbox-custom"></span>
+                            Feature this event
+                        </label>
+                        {% if form.is_featured.errors %}
+                            <span class="error-message">{{ form.is_featured.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            {{ form.is_trending }}
+                            <span class="checkbox-custom"></span>
+                            Mark as trending
+                        </label>
+                        {% if form.is_trending.errors %}
+                            <span class="error-message">{{ form.is_trending.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <span class="btn-text">Create Event</span>
+                    <span class="btn-loading">Creating...</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="{% static 'js/create_event.js' %}"></script>
+</body>
+</html>

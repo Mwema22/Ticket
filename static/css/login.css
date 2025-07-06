@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Winky+Rough&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    font-family: "Winky Rough", sans-serif;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden; /* allow vertical scroll */
+}
+
+/* ==== Container ==== */
+.container {
+    width: 100%;
+    max-width: 900px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* ==== Forms Wrapper ==== */
+.forms-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+}
+
+/* ==== Form ==== */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ==== Title ==== */
+.title {
+    color:#6f00ff;
+    font-family: "Pacifico", cursive;
+    font-size: 42px;
+    margin-bottom: 30px;
+}
+
+/* ==== Input Field ==== */
+.input-field {
+    width: 100%;
+    background-color: black;
+    border-radius: 55px;
+    margin: 10px auto;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.input-field i {
+    margin-right: 15px;
+    font-size: 20px;
+    color: white;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-field input {
+    flex: 1;
+    background: none;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    padding-left: 5px;
+}
+
+/* ==== Dropdown ==== */
+select {
+    width: 100%;
+    max-width: 400px;
+    height: 55px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 55px;
+    padding: 0 20px;
+    margin: 10px auto;
+    font-size: 18px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+/* ==== Button ==== */
+.btn {
+    width: 150px;
+    height: 45px;
+    background-color: #ae00ff;
+    color: white;
+    border: none;
+    border-radius: 48px;
+    font-weight: 500;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin: 15px auto;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #5f207c;
+}
+
+/* ==== Social Media ==== */
+.social-text {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.social-media {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.social-icon {
+    height: 45px;
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-size: 20px;
+    text-decoration: none;
+    background: #eaeaea;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.social-icon:hover {
+    color: #FF9F00;
+    background: white;
+}
+
+/* ==== Responsive Breakpoints ==== */
+@media (max-width: 768px) {
+    .title {
+        font-size: 36px;
+    }
+
+    .input-field input,
+    select {
+        font-size: 16px;
+    }
+
+    .btn {
+        width: 130px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 30px;
+    }
+
+    .input-field {
+        padding: 0 15px;
+    }
+
+    .input-field i {
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    .btn {
+        width: 120px;
+        font-size: 13px;
+    }
+
+    select {
+        font-size: 16px;
+    }
+}

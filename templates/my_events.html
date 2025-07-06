@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Events</title>
+</head>
+<body>
+    <h1>My Events</h1>
+
+    {% if my_events %}
+        <ul>
+            {% for event in my_events %}
+                <li>
+                    <h3>{{ event.event_name }}</h3>
+                    <p>{{ event.description }}</p>
+                    <p><strong>Start:</strong> {{ event.start_date }}</p>
+                    <p><strong>End:</strong> {{ event.end_date }}</p>
+                    <p><strong>Venue:</strong> {{ event.venue_name }}</p>
+                    <p><strong>Status:</strong> {{ event.status }}</p>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have not created any events.</p>
+    {% endif %}
+</body>
+</html>
