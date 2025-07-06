@@ -37,7 +37,7 @@ class EventPlanner(models.Model):
         User, 
         on_delete=models.CASCADE,
         db_column='users',
-        default=1
+        
     )
     organization_name = models.CharField(max_length=20,default="Banjuka")
     description = models.TextField(blank=True, null=True)

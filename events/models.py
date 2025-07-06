@@ -47,7 +47,14 @@ class Event(models.Model):
     view_count = models.IntegerField(default=0)
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+    EventPlanner,
+    on_delete=models.CASCADE,
+    related_name='events_created',
+    null=True,  
+    blank=True
 
+)
     def __str__(self):
         return self.event_name
 
