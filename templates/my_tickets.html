@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Tickets</title>
+</head>
+<body>
+    <h1>My Tickets</h1>
+
+    {% if my_tickets %}
+        <ul>
+            {% for ticket in my_tickets %}
+                <li>
+                    <strong>{{ ticket.ticket_name }}</strong> — 
+                    {{ ticket.event.event_name }} | 
+                    {{ ticket.price }} | 
+                    {{ ticket.event.start_date }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No tickets found.</p>
+    {% endif %}
+</body>
+</html>

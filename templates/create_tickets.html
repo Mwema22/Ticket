@@ -1,0 +1,221 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Ticket Type</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    
+    <!-- Font Awesome -->
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/create_tickets.css' %}">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar (if you have one) -->
+            <div class="col-md-2 sidebar">
+                <!-- Your sidebar content here -->
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-10 main-content">
+                <div class="ticket-form-container">
+                    <!-- Header -->
+                    <div class="form-header">
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="fas fa-ticket-alt header-icon"></i>
+                            <h1 class="form-title">Create New Ticket Type</h1>
+                        </div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{% url 'event_planner_dashboard' %}">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Create Ticket Type</li>
+                            </ol>
+                        </nav>
+                    </div>
+
+                    <!-- Messages -->
+                    {% if messages %}
+                        <div class="messages-container">
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-triangle{% else %}info-circle{% endif %}"></i>
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <!-- Form Card -->
+                    <div class="card form-card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-plus-circle"></i>
+                                Ticket Type Details
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" class="ticket-form">
+                                {% csrf_token %}
+                                
+                                <div class="row">
+                                    <!-- Ticket Name -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="{{ form.ticket_name.id_for_label }}" class="form-label">
+                                            <i class="fas fa-tag"></i>
+                                            Ticket Name *
+                                        </label>
+                                        {{ form.ticket_name }}
+                                        {% if form.ticket_name.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.ticket_name.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Price -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="{{ form.price.id_for_label }}" class="form-label">
+                                            <i class="fas fa-dollar-sign"></i>
+                                            Price *
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">$</span>
+                                            {{ form.price }}
+                                        </div>
+                                        {% if form.price.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.price.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Available Quantity -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="{{ form.available_qty.id_for_label }}" class="form-label">
+                                            <i class="fas fa-sort-numeric-up"></i>
+                                            Available Quantity *
+                                        </label>
+                                        {{ form.available_qty }}
+                                        {% if form.available_qty.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.available_qty.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Event -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="{{ form.event.id_for_label }}" class="form-label">
+                                            <i class="fas fa-calendar-alt"></i>
+                                            Event *
+                                        </label>
+                                        {{ form.event }}
+                                        {% if form.event.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.event.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="mb-3">
+                                    <label for="{{ form.description.id_for_label }}" class="form-label">
+                                        <i class="fas fa-align-left"></i>
+                                        Description
+                                    </label>
+                                    {{ form.description }}
+                                    {% if form.description.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.description.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="row">
+                                    <!-- Sales Start Date -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="{{ form.sales_start_date.id_for_label }}" class="form-label">
+                                            <i class="fas fa-play-circle"></i>
+                                            Sales Start Date *
+                                        </label>
+                                        {{ form.sales_start_date }}
+                                        {% if form.sales_start_date.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.sales_start_date.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Sales End Date -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="{{ form.sales_end_date.id_for_label }}" class="form-label">
+                                            <i class="fas fa-stop-circle"></i>
+                                            Sales End Date *
+                                        </label>
+                                        {{ form.sales_end_date }}
+                                        {% if form.sales_end_date.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.sales_end_date.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <!-- Form Actions -->
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-save"></i>
+                                        Create Ticket Type
+                                    </button>
+                                    <a href="{% url 'event_planner_dashboard' %}" class="btn btn-secondary btn-lg">
+                                        <i class="fas fa-times"></i>
+                                        Cancel
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Help Section -->
+                    <div class="card help-card mt-4">
+                        <div class="card-header">
+                            <h6 class="card-title mb-0">
+                                <i class="fas fa-question-circle"></i>
+                                Tips for Creating Ticket Types
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <ul class="help-list">
+                                <li><i class="fas fa-lightbulb"></i> Choose descriptive names like "Early Bird", "VIP", or "General Admission"</li>
+                                <li><i class="fas fa-lightbulb"></i> Set sales dates to create urgency and manage availability</li>
+                                <li><i class="fas fa-lightbulb"></i> Consider offering multiple ticket types at different price points</li>
+                                <li><i class="fas fa-lightbulb"></i> Include clear descriptions about what each ticket type includes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Font Awesome JS -->
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+            crossorigin="anonymous"></script>
+</body>
+</html>

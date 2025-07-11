@@ -2,13 +2,50 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from datetime import timedelta
+from django.utils import timezone
 from django.contrib.auth import views as auth_views
 from users.models import EventPlanner
 from users.forms import RegistrationForm, UserUpdateForm
+from events.models import Event, EventCategory
+from django.utils import timezone
+from datetime import timedelta
+from events.models import Event
 
-# Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    today = timezone.localdate()
+    now = timezone.now()
+
+    # All events
+    all_events = Event.objects.all().order_by('start_date')
+
+    # Today's events
+    today_events = Event.objects.filter(start_date__date=today)
+
+    # Weekend events
+    if today.weekday() in [5, 6]:  # today is Sat or Sun
+        saturday = today if today.weekday() == 5 else today - timedelta(days=1)
+        sunday = today if today.weekday() == 6 else today
+    else:
+        saturday = today + timedelta((5 - today.weekday()) % 7)
+        sunday = saturday + timedelta(days=1)
+
+    weekend_events = Event.objects.filter(start_date__date__gte=saturday, start_date__date__lte=sunday)
+
+    # Free events
+    free_events = Event.objects.filter(ticket_types__price=0).distinct()
+
+    categories = EventCategory.objects.all().order_by('display_order')
+
+
+    return render(request, 'index.html', {
+        'all_events': all_events,
+        'today_events': today_events,
+        'weekend_events': weekend_events,
+        'free_events': free_events,
+        'categories': categories,
+    })
+
 
 def login_view(request):
     if request.method == "POST":

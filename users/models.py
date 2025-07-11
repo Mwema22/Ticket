@@ -48,5 +48,5 @@ class EventPlanner(models.Model):
     # Many-to-many relationship will be defined in Events model
 
     def __str__(self):
-        return self.organization_name
+        return self.user.username
     
