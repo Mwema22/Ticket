@@ -1,0 +1,26 @@
+
+  body {
+    background-color: #f8f9fa;
+  }
+
+  .gradient-header {
+    background: linear-gradient(90deg, #8b5cf6, #9d2de7);
+    color: white;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .profile-card {
+    min-height: 60vh;
+    min-width: 350px;
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .card-body {
+    padding: 2rem;
+  }
+

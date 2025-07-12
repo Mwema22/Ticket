@@ -1,0 +1,286 @@
+/* attendees_dashboard.css */
+
+/* Custom Variables */
+:root {
+    --primary-color: #8A2BE2;
+    --secondary-color: #6f42c1;
+    --accent-color: #ff6b6b;
+    --text-color: #333;
+    --light-bg: #f8f9fa;
+    --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+}
+
+/* Profile Picture Styles */
+.profile-pic-sm {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-pic-lg {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+}
+
+/* Notification and Cart Badges */
+.notification-badge,
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 10px;
+    min-width: 18px;
+    text-align: center;
+}
+
+/* Dropdown Menus */
+.notification-dropdown,
+.cart-dropdown {
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-dropdown .dropdown-item,
+.cart-dropdown .dropdown-item {
+    padding: 8px 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.notification-dropdown .dropdown-item:last-child,
+.cart-dropdown .dropdown-item:last-child {
+    border-bottom: none;
+}
+
+/* Dashboard Sidebar */
+.dashboard-sidebar {
+    box-shadow: var(--card-shadow);
+    border: none;
+}
+
+.dashboard-sidebar .nav-link {
+    color: var(--text-color);
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+.dashboard-sidebar .nav-link:hover,
+.dashboard-sidebar .nav-link.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.dashboard-sidebar .nav-link:last-child {
+    border-bottom: none;
+}
+
+/* Event Cards */
+.event-card-item {
+    border: none;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.event-card-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.event-card-item .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.event-card-item .card-title {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.price-tag {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.rating {
+    color: #ffc107;
+}
+
+/* Content Sections */
+.content-section {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ticket Cards */
+.ticket-card {
+    border: none;
+    box-shadow: var(--card-shadow);
+    border-left: 4px solid var(--primary-color);
+}
+
+.ticket-card .badge {
+    font-size: 12px;
+}
+
+/* Modal Styles */
+.modal-content {
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background-color: var(--primary-color);
+    color: white;
+    border-bottom: none;
+}
+
+.modal-header .btn-close {
+    filter: invert(1);
+}
+
+/* Ticket Options */
+.ticket-option {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.ticket-option:hover {
+    border-color: var(--primary-color);
+}
+
+.ticket-controls {
+    display: flex;
+    align-items: center;
+}
+
+.ticket-controls button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Share Buttons */
+.share-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.share-buttons button {
+    flex: 1;
+    min-width: 100px;
+}
+
+/* Star Rating */
+.star-rating {
+    display: flex;
+    gap: 5px;
+}
+
+.star-rating i {
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    font-size: 20px;
+}
+
+.star-rating i:hover,
+.star-rating i.active {
+    color: #ffc107;
+}
+
+/* Table Styles */
+.table-responsive {
+    box-shadow: var(--card-shadow);
+    border-radius: var(--border-radius);
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    background-color: var(--light-bg);
+    border-bottom: 2px solid var(--primary-color);
+    font-weight: 600;
+}
+
+/* Filter Buttons */
+.btn-group .btn {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-group .btn.active,
+.btn-group .btn:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* Form Styles */
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(138, 43, 226, 0.25);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-sidebar {
+        margin-bottom: 20px;
+    }
+    
+    .share-buttons {
+        flex-direction: column;
+    }
+    
+    .share-buttons button {
+        width: 100%;
+    }
+    
+    .ticket-option {
+        padding: 10px;
+    }
+}
